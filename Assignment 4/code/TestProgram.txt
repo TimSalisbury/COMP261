@@ -1,0 +1,11 @@
+vars $a;
+$a = 1;
+if(eq($a, 1)){
+    $a = 2;
+}
+if(eq($a, 2)){
+    vars $c;
+    move;
+    $c = 2;
+}
+$c = 1;

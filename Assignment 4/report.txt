@@ -1,0 +1,7 @@
+My program implements all of the first three stages, and parts of the fourth stage. Proper variable scoping is implemented in the robot class, this is done
+by taking a snapshot of all the variables assigned/declared at the start of a block, at the end of the same block all variables in the map are removed apart from
+the ones that were recorded in the snapshot.
+
+For declaration of variables and scoping I used a tree data structure, where the variables are stored in a VariableTreeNode, which holds the variables and the parent
+VariableTreeNode to it. This means if we try to reference a variable in a scope and it doesn't exist in the VariableTreeNode associated with that block node then it can ascend
+up the tree and attempt to find the variable that way by checking higher up scopes. If the variable is not found then an exception is thrown.

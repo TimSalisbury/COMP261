@@ -1,0 +1,67 @@
+COMP261 Report - Tim Salisbury - 300782343
+A*:
+    frontier = PriorityQueue of node elements sorted by smallest fCost (hCost + gCost)
+    searched = Set of node elements
+    path = Map of Nodes to Nodes (child -> parent)
+    
+    add start to frontier
+    while frontier has elements:
+        n* = frontier.poll
+        if(n* == endNode)
+            return reconstructed path
+        
+        add n* to searched
+        for(neighbour in n*):
+            if(searched contains neighbour) continue
+            neighbour.gCost = n*.gCost + calculateGCost(neighbour)
+            neighbour.hCost = calculateHCost(neighbour)
+            frontier.offer(neighbour)
+            path.put(neighbour, n*)
+
+
+Articulation Points:
+    set all Node depths to infinity
+    numSubTrees = number of subTrees root node has
+    for(neighbour in root):
+        if(neighbour.depth == infinity):
+            neighbour.parent = root
+            calcArts(neighbour, root)
+
+
+gCost = Distance if minimising distance
+    or time taken to traverse road if minimising time
+
+hCost = Distance if minimising distance
+    or time taken roughly to traverse road
+    if minimising time
+
+    
+    calcArts(Node fristNode, Node root):
+        frontier = stack of nodes
+        firstNode.parent = root
+        firstNode.depth = 0
+        frontier.push(firstNode)
+        while frontier has elements:
+            n* = frontier.peek
+            if(n*.depth == infinity):
+                n*.depth = 0
+                n*.reachBack = 0
+                n*.children = all children minus parent
+            else if(n* has children to process):
+                child = n*.getChild and remove child from n* children
+                if(child.depth < infinity):
+                    n*.reachBack = min(child.depth, n*.reachBack)
+                else:
+                    child.depth = n*.depth + 1
+                    child.parent = n*
+                    frontier.push(child)
+            else:
+                if(n* does not equal firstNode):
+                    parent = n*.parent
+                    parent.reachBack = min(n*.reachBack, parent.reachBack)
+                    if(n*.reachBack >= parent.depth):
+                        APS.add(parent)
+                frontier.pop
+
+
+
